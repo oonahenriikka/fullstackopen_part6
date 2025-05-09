@@ -25,7 +25,7 @@ const AnecdoteList = ({ vote }) => {
   )
 }
 
-// 🔧 PropTypes-määritys
+
 AnecdoteList.propTypes = {
   vote: PropTypes.func.isRequired
 }

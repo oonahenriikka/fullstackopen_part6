@@ -1,9 +1,7 @@
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
 import { voteAnecdote } from './reducers/anecdoteReducer'
 import { createAnecdote } from './reducers/anecdoteReducer'
-import { setNotification, clearNotification } from './reducers/notificationReducer'
-import { initializeAnecdotes } from './reducers/anecdoteReducer'
+import { setNotificationWithTimeoutAsync } from './reducers/notificationReducer'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Notification from './components/Notification'
@@ -11,34 +9,23 @@ import Notification from './components/Notification'
 const App = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(initializeAnecdotes())
-  }, [dispatch])
-
   const handleVote = (anecdote) => {
-    console.log("dispatching vote for", anecdote.content) // Debuggaus
+    console.log("dispatching vote for", anecdote.content) 
     dispatch(voteAnecdote(anecdote.id))
     const voteMessage = `you voted '${anecdote.content}'`
-    console.log("dispatching notification: ", voteMessage) // Debuggaus
-    dispatch(setNotification(voteMessage))
+    console.log("dispatching notification: ", voteMessage)
+    
+    dispatch(setNotificationWithTimeoutAsync(voteMessage, 5)) 
 
-    setTimeout(() => {
-      console.log("dispatching clearNotification") // Debuggaus
-      dispatch(clearNotification())
-    }, 5000)
   }
 
   const handleCreate = (content) => {
-    console.log("dispatching create for", content) // Debuggaus
+    console.log("dispatching create for", content) 
     dispatch(createAnecdote(content))
     const createMessage = `you created '${content}'`
-    console.log("dispatching notification: ", createMessage) // Debuggaus
-    dispatch(setNotification(createMessage))
-
-    setTimeout(() => {
-      console.log("dispatching clearNotification") // Debuggaus
-      dispatch(clearNotification())
-    }, 5000)
+    console.log("dispatching notification: ", createMessage) 
+    
+    dispatch(setNotificationWithTimeoutAsync(createMessage, 5)) 
   }
 
   return (

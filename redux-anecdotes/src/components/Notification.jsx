@@ -10,7 +10,7 @@ const Notification = () => {
     marginBottom: 10
   }
 
-  if (!notification) return null  // Varmista, että ilmoitus ei näy, jos sitä ei ole
+  if (!notification) return null  
 
   return (
     <div style={style}>
