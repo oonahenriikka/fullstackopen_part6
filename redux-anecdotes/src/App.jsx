@@ -1,13 +1,19 @@
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 import { voteAnecdote } from './reducers/anecdoteReducer'
 import { createAnecdote } from './reducers/anecdoteReducer'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
+import { initializeAnecdotes } from './reducers/anecdoteReducer'
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Notification from './components/Notification'
 
 const App = () => {
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(initializeAnecdotes())
+  }, [dispatch])
 
   const handleVote = (anecdote) => {
     console.log("dispatching vote for", anecdote.content) // Debuggaus

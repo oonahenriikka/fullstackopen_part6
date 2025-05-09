@@ -5,7 +5,7 @@ const AnecdoteForm = ({ createAnecdote }) => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    createAnecdote(content) // ✅ Kutsutaan nyt propsina saatua funktiota
+    createAnecdote(content) 
   }
 
   return (
@@ -18,7 +18,6 @@ const AnecdoteForm = ({ createAnecdote }) => {
   )
 }
 
-// 🔧 Lisätään prop validation
 AnecdoteForm.propTypes = {
   createAnecdote: PropTypes.func.isRequired
 }
