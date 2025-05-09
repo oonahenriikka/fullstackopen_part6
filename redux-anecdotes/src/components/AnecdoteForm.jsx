@@ -1,14 +1,11 @@
-import { useDispatch } from 'react-redux'
-import { createAnecdote } from '../reducers/anecdoteReducer'
+import PropTypes from 'prop-types'
 
-const AnecdoteForm = () => {
-  const dispatch = useDispatch()
-
+const AnecdoteForm = ({ createAnecdote }) => {
   const addAnecdote = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
-    dispatch(createAnecdote(content))
+    createAnecdote(content) // ✅ Kutsutaan nyt propsina saatua funktiota
   }
 
   return (
@@ -19,6 +16,11 @@ const AnecdoteForm = () => {
       <button type="submit">create</button>
     </form>
   )
+}
+
+// 🔧 Lisätään prop validation
+AnecdoteForm.propTypes = {
+  createAnecdote: PropTypes.func.isRequired
 }
 
 export default AnecdoteForm

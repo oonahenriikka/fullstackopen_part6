@@ -1,15 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { voteAnecdote } from '../reducers/anecdoteReducer'
+import { useSelector } from 'react-redux'
+import PropTypes from 'prop-types'
 
-const AnecdoteList = () => {
-  const dispatch = useDispatch()
-  const anecdotes = useSelector(state =>
-    [...state].sort((a, b) => b.votes - a.votes)
-  )
-
-  const vote = (id) => {
-    dispatch(voteAnecdote(id))
-  }
+const AnecdoteList = ({ vote }) => {
+  const anecdotes = useSelector(({ anecdotes, filter }) => {
+    return anecdotes
+      .filter(anecdote =>
+        anecdote.content.toLowerCase().includes(filter.toLowerCase())
+      )
+      .sort((a, b) => b.votes - a.votes)
+  })
 
   return (
     <div>
@@ -18,12 +17,17 @@ const AnecdoteList = () => {
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
       )}
     </div>
   )
+}
+
+// 🔧 PropTypes-määritys
+AnecdoteList.propTypes = {
+  vote: PropTypes.func.isRequired
 }
 
 export default AnecdoteList
